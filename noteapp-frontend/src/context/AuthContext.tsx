@@ -117,7 +117,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           error: null
         });
       } else {
-        localStorage.removeItem('token');
+      localStorage.removeItem('token');
         setState({
           isLoggedIn: false,
           user: null,
@@ -137,6 +137,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
     }
   }, [isOnline, cacheUserData, getCachedUserData]);
+
+  // Verify token on app initialization
+  const verifyToken = useCallback(async () => {
+    try {
+      const response = await api.get('/api/v1/verify-token');
+      if (response.data.status) {
+        const userData = await AuthService.getCurrentUser();
+        setState({
+          isLoggedIn: true,
+          user: userData,
+          loading: false,
+          error: null
+        });
+      } else {
+        setState((prevState) => ({ ...prevState, loading: false }));
+      }
+    } catch (error) {
+      console.error('Token verification failed:', error);
+      setState((prevState) => ({ ...prevState, loading: false }));
+    }
+  }, []);
+
+  // Verify token when the app loads
+  useEffect(() => {
+    verifyToken();
+  }, [verifyToken]);
 
   useEffect(() => {
     initializeAuth();

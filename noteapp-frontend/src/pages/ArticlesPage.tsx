@@ -52,12 +52,18 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
   const fetchArticles = async (pageNum: number) => {
     try {
       setIsLoadingMore(pageNum > 1);
+
       const response = await ArticleService.getAllArticles({ page: pageNum });
-      console.log(response.data);
+      console.log('Raw API Response:', response); // Debug için ekledim
+
+      // API yanıtının yapısını kontrol et
+      const articles = response.data.articles;
+      console.log('Articles from API:', articles); // Debug için ekledim
+
       if (pageNum === 1) {
-        setArticles(response.data.articles);
+        setArticles(articles);
       } else {
-        setArticles(prev => [...prev, ...response.data.articles]);
+        setArticles(prev => [...prev, ...articles]);
       }
       
       setHasMore(response.data.pagination.has_more);
@@ -102,8 +108,8 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
             isDark={isDark}
             options={filterOptions}
             onFilterChange={setFilterOptions}
-            universities={[...new Set(articles.map(article => article.university).filter((uni): uni is string => uni !== undefined))]}
-            departments={[...new Set(articles.map(article => article.department).filter((dept): dept is string => dept !== undefined))]}
+            universities={[...new Set(articles.map(article => article.university?.name || article.university).filter((uni): uni is string => uni !== undefined))]}
+            departments={[...new Set(articles.map(article => article.department?.name || article.department).filter((dept): dept is string => dept !== undefined))]}
             years={[...new Set(articles.map(article => article.year).filter((year): year is number => year !== undefined))]}
             semesters={[...new Set(articles.map(article => article.semester).filter((sem): sem is string => sem !== undefined))]}
           />
@@ -137,8 +143,8 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
               ))
             ) : (
               <>
-                {filteredArticles.map((article, index) => {
-                  if (filteredArticles.length === index + 1) {
+                {articles.map((article, index) => {
+                  if (articles.length === index + 1) {
                     return (
                       <div ref={lastArticleElementRef} key={article.id}>
                         <ArticleCard 

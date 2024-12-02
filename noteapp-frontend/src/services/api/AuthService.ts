@@ -73,12 +73,12 @@ export const login = async (email: string, password: string): Promise<AuthRespon
 export const logout = async (): Promise<void> => {
   try {
     await api.post('/logout');
-    localStorage.removeItem('token');
+   // localStorage.removeItem('token');
     delete api.defaults.headers.common['Authorization'];
   } catch (error: any) {
     console.error('Logout error:', error.response?.data);
     // Even if logout fails, remove token
-    localStorage.removeItem('token');
+  //  localStorage.removeItem('token');
     delete api.defaults.headers.common['Authorization'];
     throw error;
   }

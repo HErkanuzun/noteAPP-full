@@ -200,7 +200,7 @@ function ProfilePage({ isDark }: ProfilePageProps) {
         <div className="p-6 border-b border-gray-200 dark:border-gray-800">
           <div className="flex items-center gap-4 mb-4">
             <img
-              src={user.avatar}
+              src={user.profile_photo_url}
               alt={user.name}
               className="w-12 h-12 rounded-full object-cover border-2 border-blue-600"
             />

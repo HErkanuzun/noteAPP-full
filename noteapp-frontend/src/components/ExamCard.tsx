@@ -29,40 +29,46 @@ function ExamCard({ exam, isDark }: ExamCardProps) {
       >
         <div className="p-6">
           <div className="flex flex-wrap items-center gap-2 text-sm mb-2">
-            <span className={`px-3 py-1 rounded-full ${getStatusColor(exam?.status)}`}>
-              {exam?.status?.charAt(0).toUpperCase() + exam?.status?.slice(1)}
+            <span className={`px-3 py-1 rounded-full ${getStatusColor(exam.status || '')}`}>
+              {exam.status ? exam.status.charAt(0).toUpperCase() + exam.status.slice(1) : ''}
             </span>
           </div>
           
           <h3 className="text-xl font-semibold mb-2 line-clamp-2">
-            {exam?.name}
+            {exam.name || exam.title}
           </h3>
           
-          <p className="text-sm opacity-75 mb-4 line-clamp-2">
-            {exam.description}
-          </p>
+          {exam.description && (
+            <p className="text-sm opacity-75 mb-4 line-clamp-2">
+              {exam.description}
+            </p>
+          )}
 
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2 text-sm opacity-75">
               <Clock size={16} />
-              <span>{exam.duration} minutes</span>
+              <span>{exam.duration ? `${exam.duration} minutes` : 'Duration not set'}</span>
             </div>
             <div className="flex items-center gap-2 text-sm opacity-75">
               <Award size={16} />
-              <span>Created: {new Date(exam.created_at).toLocaleDateString()}</span>
+              <span>{exam.total_marks ? `${exam.total_marks} points` : 'Points not set'}</span>
             </div>
           </div>
-          
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-            <div className="text-sm opacity-75">
-              {new Date(exam.updated_at).toLocaleDateString()}
+
+          {(exam.university || exam.department) && (
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              {exam.university && (
+                <div className="text-sm opacity-75">
+                  University: {exam.university}
+                </div>
+              )}
+              {exam.department && (
+                <div className="text-sm opacity-75">
+                  Department: {exam.department}
+                </div>
+              )}
             </div>
-   
-              <div className="text-sm opacity-75">
-                by Ahmet
-              </div>
-          
-          </div>
+          )}
         </div>
       </div>
     </Link>

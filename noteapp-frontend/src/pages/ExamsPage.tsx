@@ -39,11 +39,21 @@ function ExamsPage({ isDark }: ExamsPageProps) {
   const fetchExams = async (pageNum: number) => {
     try {
       setIsLoadingMore(pageNum > 1);
-      const response = await ExamService.getAllExams();
-      console.log(response.data.exams);
+      const response = await ExamService.getAllExams({
+        page: pageNum,
+        perPage: 9,
+        ...filterOptions,
+        search: searchQuery
+      });
       
-      setExams(response.data.exams);
-    
+      const newExams = response.data.exams;
+      setHasMore(newExams.length === 9); // If we got full page, there might be more
+      
+      if (pageNum === 1) {
+        setExams(newExams);
+      } else {
+        setExams(prevExams => [...prevExams, ...newExams]);
+      }
     } catch (error) {
       console.error('Error fetching exams:', error);
     } finally {
@@ -55,16 +65,15 @@ function ExamsPage({ isDark }: ExamsPageProps) {
   useEffect(() => {
     setIsLoading(true);
     setPage(1);
+    setExams([]); // Clear existing exams when filters change
     fetchExams(1);
-  }, [filterOptions]);
+  }, [filterOptions, searchQuery]);
 
   useEffect(() => {
-    
+    if (page > 1) {
       fetchExams(page);
-    
+    }
   }, [page]);
-
-
 
   return (
     <div className="container mx-auto px-4 py-8">

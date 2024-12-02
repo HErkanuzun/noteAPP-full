@@ -48,11 +48,10 @@ export interface Article {
   content: string;
   tags: string[];
   isFavorite?: boolean;
-  imageUrl: string;
+  featured_image: string;
+  storage_link: string;
   university: string;
   department: string;
-  abstract: string;
-  driveFileId?: string;
 }
 
 export interface Event {
@@ -76,7 +75,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  avatar: string;
+  profile_photo_url: string;
   bio?: string;
   university?: string;
   department?: string;

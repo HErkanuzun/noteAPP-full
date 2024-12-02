@@ -2,8 +2,14 @@ export interface Note {
   id: number;
   title: string;
   content: string;
-  university: string;
-  department: string;
+  university: {
+    id: number;
+    name: string;
+  };
+  department: {
+    id: number;
+    name: string;
+  };
   year: string;
   semester: string;
   subject?: string;
@@ -14,6 +20,34 @@ export interface Note {
   likes?: number;
   downloads?: number;
   author?: string;
+}
+
+export interface Article {
+  id: number;
+  title: string;
+  content: string;
+  university?: string;
+  department?: string;
+  year?: string | number;
+  semester?: string;
+  subject?: string;
+  storage_link?: string;
+  created_at: string;
+  updated_at: string;
+  abstract?: string;
+  image_url?: string;
+  likes_count?: number;
+  downloads_count?: number;
+  author_id?: number;
+  creator?: {
+    id: number;
+    name: string;
+  };
+  status?: string;
+  featured_image?: string;
+  excerpt?: string;
+  published_at?: string;
+  slug?: string;
 }
 
 export interface FilterOptions {

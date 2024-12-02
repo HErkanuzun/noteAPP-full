@@ -48,7 +48,7 @@ export const registerUser = async (data: RegisterData) => {
 export const logoutUser = async () => {
   try {
     await api.post('/v1/logout');
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
   } catch (error: any) {
     console.error('Logout error:', error.response?.data?.message || error.message);
     throw error;
@@ -64,7 +64,7 @@ export const getCurrentUser = async (): Promise<User | null> => {
     return response.data;
   } catch (error: any) {
     console.error('Get current user error:', error.response?.data?.message || error.message);
-    localStorage.removeItem('token');
+   // localStorage.removeItem('token');
     return null;
   }
 };

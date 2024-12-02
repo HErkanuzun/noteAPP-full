@@ -10,8 +10,8 @@ interface LoginPageProps {
 }
 
 function LoginPage({ isDark }: LoginPageProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('herkanuzun@gmail.com');
+  const [password, setPassword] = useState('qwer1234');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login } = useAuth();

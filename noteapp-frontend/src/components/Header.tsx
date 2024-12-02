@@ -12,6 +12,7 @@ interface HeaderProps {
 
 function Header({ isDark, setIsDark }: HeaderProps) {
   const { isLoggedIn, user, logout, loading } = useAuth();
+  console.log(user);
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,7 +37,8 @@ function Header({ isDark, setIsDark }: HeaderProps) {
         <div className="relative group hidden md:block">
           <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
             <img
-              src={user.avatar}
+              src={user.profile_photo_url}
+              
               alt="Profile"
               className="w-8 h-8 rounded-full object-cover"
             />
@@ -188,7 +190,7 @@ function Header({ isDark, setIsDark }: HeaderProps) {
               <div className="mb-6">
                 <div className="flex items-center gap-4 mb-4">
                   <img
-                    src={user.avatar}
+                    src={user.profile_photo_path}
                     alt={user.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-blue-600"
                   />

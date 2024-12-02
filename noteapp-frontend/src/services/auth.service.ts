@@ -31,7 +31,7 @@ export async function logout() {
   try {
     await api.post(API_ENDPOINTS.AUTH.LOGOUT);
   } finally {
-    localStorage.removeItem('token');
+   // localStorage.removeItem('token');
   }
 }
 

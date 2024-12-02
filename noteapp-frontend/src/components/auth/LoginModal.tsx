@@ -9,8 +9,8 @@ interface LoginModalProps {
 
 function LoginModal({ isDark }: LoginModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('herkanuzun@gmail.com');
+  const [password, setPassword] = useState('qwer1234');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isVisible, setIsVisible] = useState(false);

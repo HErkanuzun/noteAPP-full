@@ -33,7 +33,7 @@ api.interceptors.response.use(
     // Check if the error is 401 and the endpoint is not public
     if (error.response?.status === 401 && 
         !publicEndpoints.some(endpoint => error.config.url?.startsWith(endpoint))) {
-      localStorage.removeItem('token');
+     // localStorage.removeItem('token');
       window.location.href = '/login';
     }
     return Promise.reject(error);
