@@ -25,11 +25,14 @@ function HomePage({ isDark }: HomePageProps) {
       try {
         setIsLoading(true);
         const [notes, exams] = await Promise.all([
-          NoteService.getNotes({ sort: 'likes', limit: 6 }),
-          ExamService.getExams({ sort: 'likes', limit: 6 })
+          NoteService.getAllNotes(),
+          ExamService.getAllExams()
         ]);
-        setPopularNotes(notes);
-        setPopularExams(exams);
+
+        console.log(notes, exams);
+        
+        setPopularNotes(notes.data.notes);
+        setPopularExams(exams.data.exams);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {

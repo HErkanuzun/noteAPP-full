@@ -29,13 +29,13 @@ function ExamCard({ exam, isDark }: ExamCardProps) {
       >
         <div className="p-6">
           <div className="flex flex-wrap items-center gap-2 text-sm mb-2">
-            <span className={`px-3 py-1 rounded-full ${getStatusColor(exam.status)}`}>
-              {exam.status.charAt(0).toUpperCase() + exam.status.slice(1)}
+            <span className={`px-3 py-1 rounded-full ${getStatusColor(exam?.status)}`}>
+              {exam?.status?.charAt(0).toUpperCase() + exam?.status?.slice(1)}
             </span>
           </div>
           
           <h3 className="text-xl font-semibold mb-2 line-clamp-2">
-            {exam.name}
+            {exam?.name}
           </h3>
           
           <p className="text-sm opacity-75 mb-4 line-clamp-2">
@@ -49,19 +49,19 @@ function ExamCard({ exam, isDark }: ExamCardProps) {
             </div>
             <div className="flex items-center gap-2 text-sm opacity-75">
               <Award size={16} />
-              <span>{exam.total_marks} points</span>
+              <span>Created: {new Date(exam.created_at).toLocaleDateString()}</span>
             </div>
           </div>
           
           <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="text-sm opacity-75">
-              {new Date(exam.created_at).toLocaleDateString()}
+              {new Date(exam.updated_at).toLocaleDateString()}
             </div>
-            {exam.creator && (
+   
               <div className="text-sm opacity-75">
-                by {exam.creator.name}
+                by Ahmet
               </div>
-            )}
+          
           </div>
         </div>
       </div>

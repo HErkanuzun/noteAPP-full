@@ -7,6 +7,7 @@ export interface Note {
   likes: number;
   downloads: number;
   imageUrl: string;
+  storage_link?: string;
   content?: string;
   university: string;
   department: string;
@@ -18,22 +19,16 @@ export interface Note {
 
 export interface Exam {
   id: number;
-  title: string;
-  subject: string;
-  professor: string;
-  term: string;
-  year: string;
-  likes: number;
-  downloads: number;
-  content?: string;
-  university: string;
-  department: string;
+  name: string;
+  description: string;
+  total_marks: number;
+  duration: number;
+  created_by: number;
+  status: string;
   questions?: Question[];
-  isFavorite?: boolean;
-  driveFileId?: string;
-  imageUrl?: string;
+  created_at?: string;
+  updated_at?: string;
   storage_link?: string;
-  description?: string;
 }
 
 export interface Question {

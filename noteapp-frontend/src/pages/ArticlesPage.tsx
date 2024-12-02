@@ -5,10 +5,23 @@ import ArticleCard from '../components/ArticleCard';
 import FilterPanel from '../components/FilterPanel';
 import LoadingCard from '../components/LoadingCard';
 import * as ArticleService from '../services/api/ArticleService';
-import { FilterOptions, Article } from '../types';
+import { FilterOptions } from '../types';
 
 interface ArticlesPageProps {
   isDark: boolean;
+}
+
+// Add this new interface to match your expected data structure
+interface Article {
+  id: number;
+  title: string;
+  content: string;
+  subject?: string;  // Make subject optional
+  university?: string;  // Make university optional
+  department?: string;  // Make department optional
+  storage_link?: string;  // Make storage_link optional
+  year?: number;  // Make year optional
+  semester?: string;  // Make semester optional
 }
 
 function ArticlesPage({ isDark }: ArticlesPageProps) {
@@ -40,7 +53,7 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
     try {
       setIsLoadingMore(pageNum > 1);
       const response = await ArticleService.getAllArticles({ page: pageNum });
-      
+      console.log(response.data);
       if (pageNum === 1) {
         setArticles(response.data.articles);
       } else {
@@ -74,9 +87,9 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
     const query = searchQuery.toLowerCase();
     return (
       article.title?.toLowerCase().includes(query) ||
-      article.subject?.toLowerCase().includes(query) ||
-      article.university?.toLowerCase().includes(query) ||
-      article.department?.toLowerCase().includes(query)
+      (article.subject && article.subject.toLowerCase().includes(query)) ||
+      (article.university && article.university.toLowerCase().includes(query)) ||
+      (article.department && article.department.toLowerCase().includes(query))
     );
   });
 
@@ -89,10 +102,10 @@ function ArticlesPage({ isDark }: ArticlesPageProps) {
             isDark={isDark}
             options={filterOptions}
             onFilterChange={setFilterOptions}
-            universities={[...new Set(articles.map(article => article.university).filter(Boolean))]}
-            departments={[...new Set(articles.map(article => article.department).filter(Boolean))]}
-            years={[...new Set(articles.map(article => article.year).filter(Boolean))]}
-            semesters={[...new Set(articles.map(article => article.semester).filter(Boolean))]}
+            universities={[...new Set(articles.map(article => article.university).filter((uni): uni is string => uni !== undefined))]}
+            departments={[...new Set(articles.map(article => article.department).filter((dept): dept is string => dept !== undefined))]}
+            years={[...new Set(articles.map(article => article.year).filter((year): year is number => year !== undefined))]}
+            semesters={[...new Set(articles.map(article => article.semester).filter((sem): sem is string => sem !== undefined))]}
           />
         </div>
 
